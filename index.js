@@ -26,7 +26,7 @@ run();
 
 //Middlewares
 // app.use(cors())
-app.use(cors({ origin: "http://localhost:5173", allowedHeaders: ["Authorization", "Content-Type"] }));
+app.use(cors({ origin: "https://magic-shopee-front-end.vercel.app/", allowedHeaders: ["Authorization", "Content-Type"] }));
 
 app.use(express.json());
 
