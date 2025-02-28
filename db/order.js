@@ -12,6 +12,7 @@ const Schema = mongoose.Schema({
         Fname: String,
         Lname: String,
         Email: String,
+        mobileNumber:String,
         street: String,
         city: String,
         state: String,

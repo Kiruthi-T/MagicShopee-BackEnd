@@ -70,7 +70,7 @@ app.post('/Login',async (req,res)=>{
         const checkPassword=await bcrypt.compare(password,user.password);
         if(!checkPassword) return res.status(401).json({ message: "Invalid credentials" });
 
-        const token=jwt.sign({id:user._id,mail:user.mail},SECRET_KEY,{expiresIn:'1hr'});
+        const token=jwt.sign({id:user._id,mail:user.mail},SECRET_KEY,{expiresIn:'30d'});
 
         // console.log(token);
 
@@ -84,6 +84,7 @@ app.post('/Login',async (req,res)=>{
 //recents
 
 const getRecents=async (req,res,next)=>{
+    try{
     const request=req.header('authorization');
     const token=request.split(' ')[1]
     // console.log(token);
@@ -93,10 +94,17 @@ const getRecents=async (req,res,next)=>{
     // console.log(decoded);
 
     req.user=decoded.id;
-    // console.log(req.user);
-    
-    
     next();
+    // console.log(req.user);
+    }
+    catch (err) {
+        if (err.name === "TokenExpiredError") {
+            return res.status(401).json({ message: "Session expired. Please log in again." });
+        }
+        return res.status(403).json({ message: "Invalid token" });
+    }
+    
+   
     
 }
 app.get('/recents',getRecents,async (req,res)=>{
