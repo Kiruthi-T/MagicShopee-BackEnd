@@ -9,11 +9,14 @@ const Schema = mongoose.Schema({
         }
     ],
     shippingAddress: {
-        fullName: String,
-        address: String,
+        Fname: String,
+        Lname: String,
+        Email: String,
+        street: String,
         city: String,
-        postalCode: String,
-        country: String,
+        state: String,
+        Zip: String,
+        Country: String,
       },
       paymentMethod: { type: String, required: true },
       totalPrice: { type: Number, required: true },

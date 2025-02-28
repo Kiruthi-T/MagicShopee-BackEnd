@@ -117,4 +117,14 @@ app.delete('/recents/del',getRecents,async(req,res)=>{
     res.send(await recents.deleteMany({user:userId}));
 })
 
+app.get('/profile',getRecents,async(req,res)=>{
+   const userId=req.user
+   console.log(userId);
+   
+    const user=await users.findById(userId);
+    // console.log(user);
+    
+    res.send(user)
+
+})
 app.listen(Port,()=>console.log(`server is listening ${Port}`));
