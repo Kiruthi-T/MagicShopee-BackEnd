@@ -18,9 +18,26 @@ router.post('/',async (req,res)=>{
     }
 })
 
-router.get('/all',async (req,res)=>{
+const getOrders=async (req,res,next)=>{
+    const request=req.header('authorization');
+    const token=request.split(' ')[1]
+    // console.log(token);
+
+    const decoded=jwt.verify(token,process.env.SECRET_KEY);
+
+    // console.log(decoded);
+
+    req.user=decoded.id;
+    // console.log(req.user);
+    
+    
+    next();
+    
+}
+router.get('/all',getOrders,async (req,res)=>{
     try{
-        const details=await orders.find();
+        userId=req.user
+        const details=await orders.find({user:userId});
         res.send(details)
     }
     catch(err){
